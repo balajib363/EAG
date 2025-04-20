@@ -184,7 +184,60 @@ async def main():
                 DO NOT include any explanations or additional text.
                 Your entire response should be a single line starting with either FUNCTION_CALL: or FINAL_ANSWER: or FUNCTION_CALL_PAINT:"""
 
-                query = """Find the ASCII values of characters in INDIA, then return the sum of exponentials of those values. First open the paint application, then draw a rectangle using the rectangle tool. After getting the final answer, add the final answer as text in the paint application."""
+                query = """Execute these steps in EXACT order. Verify each step before proceeding.
+
+                1. ASCII CONVERSION (STRING MANIPULATION):
+                   - Convert "INDIA" to ASCII values
+                   - Call: FUNCTION_CALL: strings_to_chars_to_int|INDIA
+                   - VERIFY: Check that you get exactly 5 ASCII values
+                   - If verification fails, try again
+
+                2. EXPONENTIAL CALCULATION (ARITHMETIC):
+                   - Take the ASCII values from step 1
+                   - Calculate sum of exponentials
+                   - Call: FUNCTION_CALL: int_list_to_exponential_sum|[ASCII_VALUES]
+                   - VERIFY: Ensure the calculation is correct
+                   - If verification fails, break into smaller steps
+
+                3. PAINT ACTIONS (UI OPERATIONS):
+                  A. OPEN PAINT (DO THIS FIRST):
+                     - Call: FUNCTION_CALL_PAINT: open_paint
+                     - VERIFY: Wait until paint is fully open
+                     - If paint doesn't open, try again
+                     - Do not proceed until verified
+
+                  B. DRAW RECTANGLE (CRITICAL STEP):
+                     - Call: FUNCTION_CALL_PAINT: draw_rectangle|800|490|1375|700
+                     - VERIFY: Check that rectangle is drawn
+                     - If rectangle isn't visible, try again
+                     - Do not proceed until verified
+
+                  C. ADD TEXT (FINAL STEP):
+                     - Wait for FINAL_ANSWER from step 2
+                     - Call: FUNCTION_CALL_PAINT: add_text_in_paint|[FINAL_ANSWER]
+                     - VERIFY: Check that text is added
+                     - If text isn't visible, try again
+
+                ERROR HANDLING:
+                - If any step fails:
+                  1. Identify the error type
+                  2. Try the step again
+                  3. If still failing, break into smaller steps
+                  4. Report the error if all attempts fail
+
+                SEQUENCE RULES:
+                1. ASCII → Exponential → Paint
+                2. Paint sequence: Open → Rectangle → Text
+                3. Do not skip any step
+                4. Verify each step before proceeding
+
+                Remember:
+                - Follow the exact sequence
+                - Verify each step
+                - Handle errors appropriately
+                - Do not skip the rectangle step
+                - Wait for verifications before proceeding"""
+
                 print("Starting iteration loop...")
                 
                 # Use global iteration variables
